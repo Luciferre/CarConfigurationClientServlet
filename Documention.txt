@@ -1,0 +1,45 @@
+The structure of src of client is:
+- src
+	- model
+		- Automobile.java
+		- OptionSet.java
+	- util
+		- FileIO.java
+	- scale
+		- EditOptions.java
+	- adapter
+		- BuildAuto.java
+		- ICreateAuto.java
+		- IFixAuto.java
+		- IEditAuto.java
+		- IUpdateAuto.java
+		- ProxyAutomobile.java
+	- exception
+		- AutoException.java
+		- FixHelper.java
+	- client
+		- CarModelOptionsIO.java
+		- Client.java
+		- DefaultSocketClient.java
+		- SelectCarOption.java
+		- SocketClientConstants.java
+		- SocketClientInterface.java
+	- servlet(NEW)
+		- GetListOfModels.java
+		- GetModel.java
+
+- WebContent(NEW)
+	- GetModel.jsp
+	- PrintModel.jsp
+	
+Design Choices:
+
+In this unit, I added servlet package with GetListOfModels.java and GetModel.java. The servlet aims to extend the functionality of client, so that it can be used over the web.
+
+The server should be started first and load car files automatically. And then when you input the URL of GetModel, the GetListOfModels.java initiates the servlet to start client thread, and client will establish connection with server. Here I add a Thread.sleep(1000) to wait for connection establishment and then get model list from server. When the servlet get the list, it will print it out using html. Here I use html but not jsp because the html is easy when only print a list. When the “done” button is clicked, it will jump to GetModel.java servlet.
+
+The GetModel.java will get the model name parameter from HttpServletRequest, and let client send command 3 to get the automobile object from server. Then it will dispatch to the GetModel.jsp. Here I use jsp instead of html, it’s because that print a table is more easy and clean when use jsp. When the “done” button is clicked, it will jump to PrintModel.jsp.
+
+The PrintModel.jsp can get user choice from request and set OptionChoice to the automobile object. And then it will print the car configuration as a table.
+
+
